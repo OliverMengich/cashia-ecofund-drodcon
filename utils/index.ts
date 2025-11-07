@@ -37,10 +37,10 @@ export async function MakeCashiaPayment(amount:number, payer: string) {
             "fee": 0
         }
     }
-    const secret = 'oxEFDBl8308pYFciuiuTAMdCCgqdzipk';
+    const secret = process.env.CASHIA_API_SECRET??""
     const host = 'https://staging.cashia.com';
     const timestamp = Math.floor(Date.now() / 1000);
-    const keyID = '019a4f7b-0003-7ba6-8c2d-b1929ab4e462';
+    const keyID = process.env.CASHIA_API_KEY??"";
     const nonce = 'nonce';
     const signatureRaw = `${host}POST${timestamp}${nonce}${keyID}`;
     

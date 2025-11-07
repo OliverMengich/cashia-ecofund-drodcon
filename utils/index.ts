@@ -22,7 +22,7 @@ export async function MakeCashiaPayment(amount:number, payer: string) {
         "currency": "KES",
         "successRedirectUrl": "https://your-merchant-domain.com/success",
         "errorRedirectUrl": "https://your-merchant-domain.com/error",
-        "webhookUrl": "https://your-merchant-domain.com/webhook",
+        "webhookUrl": "https://5p7n1xdx-8081.uks1.devtunnels.ms/api/pay/callback",
         "orderDetails": [
             {
                 "name": "Solar power for schools",

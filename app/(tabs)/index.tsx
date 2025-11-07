@@ -1,80 +1,79 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform,ScrollView, Text, View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
 import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { Link, useNavigation,useRouter } from 'expo-router';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const navigation = useRouter()
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  return (
+    <ScrollView style={{paddingTop: 20, flex: 1, backgroundColor: "#F6F6F6" }}>
+      {/* Header */}
+      <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 16 }}>
+        <Text style={{ fontSize: 24, fontWeight: "700", color: "#1B5E20" }}>EcoFund 🌍</Text>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity><Text style={{ marginRight: 16 }}>🔔</Text></TouchableOpacity>
+          <TouchableOpacity><Text>👤</Text></TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Wallet & Impact Summary */}
+      <View style={{
+        backgroundColor: "#1B5E20",
+        margin: 16,
+        borderRadius: 20,
+        padding: 20,
+      }}>
+        <Text style={{ color: "#fff", fontSize: 16 }}>Wallet Balance</Text>
+        <Text style={{ color: "#fff", fontSize: 32, fontWeight: "700" }}>KSh 3,200</Text>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 10 }}>
+          <Text style={{ color: "#fff" }}>🌳 128 Trees</Text>
+          <Text style={{ color: "#fff" }}>⚡ 3 Projects</Text>
+        </View>
+      </View>
+
+      {/* Featured Projects */}
+      <Text style={{ fontSize: 18, fontWeight: "600", marginLeft: 16, marginBottom: 8 }}>
+        Featured Projects
+      </Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: 16 }}>
+        {[1, 2, 3].map((_, i) => (
+          <View key={i} style={{
+            width: 250,
+            marginRight: 16,
+            backgroundColor: "#fff",
+            borderRadius: 16,
+            shadowColor: "#000",
+            shadowOpacity: 0.1,
+            shadowRadius: 5,
+            elevation: 3,
+          }}>
+            <Image
+              source={{ uri: "https://images.unsplash.com/photo-1581090700227-1e37b190418e" }}
+              style={{ height: 120, borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+            />
+            <View style={{ padding: 12 }}>
+              <Text style={{ fontSize: 16, fontWeight: "600" }}>Solar Power for Schools</Text>
+              <Text style={{ color: "gray" }}>Raised: 72%</Text>
+              <Link style={{
+                    backgroundColor: "#4CAF50",
+                    borderRadius: 10,
+                    marginTop: 8,
+                    paddingVertical: 8,
+                    alignItems: "center"
+                  }} href={{pathname:'/projectId',params:{projectId:''}}} >
+                
+                  <Text style={{textAlign:'center',width:'100%', color: "#fff" }}>Donate</Text>
+              </Link>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+    </ScrollView>
   );
 }
 
